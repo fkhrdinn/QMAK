@@ -57,6 +57,20 @@
 			$pic = oci_fetch_array($picResult);
 			$media = $pic['MEDIA_NAME'];
 
+			$inherit = "SELECT * FROM CUSTOMERS JOIN NORMAL_USERS USING (CUSTOMER_ID) WHERE EMAIL = '$_SESSION[EMAIL]'";
+			$inheritResult = oci_parse($dbconn, $inherit);
+			oci_execute($inheritResult);
+
+			$type = null;
+			if($status = oci_fetch_array($inheritResult))
+			{
+				$type = "Normal User";
+			}
+			else
+			{
+				$type = "Commercial Users";
+			}
+
 			?>
 			<div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
 				<div class="navbar-nav">
@@ -69,6 +83,13 @@
                     <ul class="dropdown-menu dropdown-menu-light text-small shadow">
 						<li><a class="dropdown-item" href="order.php">Order History</a></li>
                         <li><a class="dropdown-item" href="setting.php">Settings</a></li>
+						<hr class="dropdown-divider">
+						<li class="disabled dropdown-item text-secondary">
+							Type of User: 
+						</li>
+						<li class="disabled dropdown-item">
+							<?php echo ' ' . $type; ?>
+						</li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>

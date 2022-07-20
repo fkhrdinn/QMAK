@@ -24,7 +24,8 @@
         }
 
         echo $customerID;
-        $receiptQuery = "INSERT INTO RECEIPTS (TOTAL_PRICE, CREATED_AT, CUSTOMER_ID, STATUS) VALUES ('$totalPrice', '$today', '$customerID', 'PENDING')";
+        $receiptQuery = "INSERT INTO RECEIPTS (TOTAL_PRICE, CREATED_AT, CUSTOMER_ID, STATUS) 
+        VALUES ('$totalPrice', '$today', '$customerID', 'PENDING')";
         $receiptResult = oci_parse($dbconn, $receiptQuery);
         oci_execute($receiptResult);
 
